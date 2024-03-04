@@ -63,60 +63,66 @@ const RecipeDetail = () => {
       <div className="w-full min-h-screen py-10 px-[5%] 2xl:container mx-auto">
         <h2 className="text-3xl text-left mb-10">{recipeDetails?.title}</h2>
 
-        <div className="w-full sm:w-4/5 md:w-3/5 lg:w-1/2 xl:w-2/5 h-[350px] rounded-[20px] mb-10 mr-auto bg-white overflow-hidden" style={{ boxShadow: "0px 6px 12px #00000019" }}>
-
-          <LazyLoadImage
-            width="100%"
-            height="100%"
-            effect="blur"
-            src={recipeDetails?.image}
-            alt={recipeDetails?.title}
-            placeholderSrc={Placeholder}
-            className="w-full h-full mb-10 object-cover object-center rounded-[18px] border-4 border-white"
-          />
-
-        </div>
-
-        <h3 className="text-2xl mb-5">Ingredients</h3>
-        <div className="w-full flex flex-wrap justify-start items-stretch mb-6">
-          {recipeDetails?.extendedIngredients?.map((ingredient, index) => (
-            ingredient.nameClean &&
-            <div
-              key={index}
-              className="w-[140px] mr-4 mb-4 p-3 flex flex-col justify-between items-center bg-white rounded-[18px]" style={{ boxShadow: "0px 6px 12px #00000019" }}>
-              <small className="font-medium text-center">
-                {ingredient.measures.metric.amount}
-                {ingredient.measures.metric.unitShort}
-              </small>
+        {!errorMessage && (
+          <main>
+            <div className="w-full sm:w-4/5 md:w-3/5 lg:w-1/2 xl:w-2/5 h-[350px] rounded-[20px] mb-10 mr-auto bg-white overflow-hidden" style={{ boxShadow: "0px 6px 12px #00000019" }}>
 
               <LazyLoadImage
                 width="100%"
                 height="100%"
                 effect="blur"
-                src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
-                alt={ingredient.image}
+                src={recipeDetails?.image}
+                alt={recipeDetails?.title}
                 placeholderSrc={Placeholder}
-                className="w-[50px] h-[50px] m-auto my-2"
+                className="w-full h-full mb-10 object-cover object-center rounded-[18px] border-4 border-white"
               />
 
-              <small className="font-medium text-center">{ingredient.nameClean}</small>
             </div>
-          ))}
-        </div>
 
-        {recipeDetails?.analyzedInstructions[0] && (
-          <>
-            <h3 className='text-2xl mb-5'>Instructions</h3>
-            <div className="mb-10">
-              {recipeDetails?.analyzedInstructions[0]?.steps.map((step, index) => (
-                <div key={index} className="flex justify-start items-start mb-2.5">
-                  <small className="min-w-[24px] max-w-[24px] h-[24px] mr-3 p-1 rounded-full flex justify-center items-center bg-green-500 text-white font-semibold">{index + 1}</small>
-                  <p dangerouslySetInnerHTML={{ __html: step.step }} className="font-normal text-justify"></p>
+            <h3 className="text-2xl mb-5">Ingredients</h3>
+            <div className="w-full flex flex-wrap justify-start items-stretch mb-6">
+              {recipeDetails?.extendedIngredients?.map((ingredient, index) => (
+                ingredient.nameClean &&
+                <div
+                  key={index}
+                  className="w-[140px] mr-4 mb-4 p-3 flex flex-col justify-between items-center bg-white rounded-[18px]" style={{ boxShadow: "0px 6px 12px #00000019" }}>
+                  <small className="font-medium text-center">
+                    {ingredient.measures.metric.amount}
+                    {ingredient.measures.metric.unitShort}
+                  </small>
+
+                  <LazyLoadImage
+                    width="100%"
+                    height="100%"
+                    effect="blur"
+                    src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
+                    alt={ingredient.image}
+                    placeholderSrc={Placeholder}
+                    className="w-[50px] h-[50px] m-auto my-2"
+                  />
+
+                  <small className="font-medium text-center">{ingredient.nameClean}</small>
                 </div>
               ))}
             </div>
-          </>
+
+            {recipeDetails?.analyzedInstructions[0] && (
+              <>
+                <h3 className='text-2xl mb-5'>Instructions</h3>
+                <div className="mb-10">
+                  {recipeDetails?.analyzedInstructions[0]?.steps.map((step, index) => (
+                    <div key={index} className="flex justify-start items-start mb-2.5">
+                      <small className="min-w-[24px] max-w-[24px] h-[24px] mr-3 p-1 rounded-full flex justify-center items-center bg-green-500 text-white font-semibold">{index + 1}</small>
+                      <p dangerouslySetInnerHTML={{ __html: step.step }} className="font-normal text-justify"></p>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
+          </main>
         )}
+
+        {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
 
         <button onClick={() => {
           if (query === "" && currentPage === 1) {
@@ -129,7 +135,6 @@ const RecipeDetail = () => {
           <IconArrowLeft />
         </button>
 
-        {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
       </div>
     </>
   );

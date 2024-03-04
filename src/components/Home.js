@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipesSuccess } from '../store/actions';
@@ -34,6 +34,7 @@ const Home = () => {
   const [spinner, setSpinner] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const itemsPerPage = 12;
+  const navigate = useNavigate();
 
   const fetchRecipes = useCallback(async () => {
     setSpinner(true);
@@ -62,9 +63,20 @@ const Home = () => {
         <title>Vegetarian Recipes</title>
       </Helmet>
       <div className="w-full min-h-screen py-10 px-[5%] 2xl:container mx-auto">
-        <h1 className="text-3xl text-center mb-10">Vegetarian Recipes</h1>
+
+        <div className="flex justify-center items-center mb-10">
+          <h1 className="text-3xl cursor-pointer" onClick={() => {
+            setQuery('');
+            setValue('');
+            setCurrentPage(1);
+            navigate('/')
+          }}>
+            Vegetarian Recipes
+          </h1>
+        </div>
+
         {!errorMessage && (
-          <>
+          <main>
             <SearchBar
               fetchRecipes={fetchRecipes}
               value={value}
@@ -74,7 +86,12 @@ const Home = () => {
             />
             {recipes.length > 0 ? (
               <>
-                <RecipeList recipes={recipes} query={query} currentPage={currentPage} />
+                <RecipeList
+                  recipes={recipes}
+                  query={query}
+                  currentPage={currentPage}
+                />
+
                 {totalResults > itemsPerPage && (
                   <Pagination
                     query={query}
@@ -88,9 +105,11 @@ const Home = () => {
             ) : (
               <p className="text-center my-5">No recipes found. Try another search.</p>
             )}
-          </>
+          </main>
         )}
+
         {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+
       </div>
     </>
   );

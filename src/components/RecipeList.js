@@ -7,7 +7,7 @@ import Placeholder from '../img/placeholder.jpg';
 
 const RecipeList = ({ recipes, query, currentPage }) => {
   return (
-    <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-5 mb-10">
+    <div className="w-full grid md:grid-cols-2 xl:grid-cols-3 gap-5">
       {recipes.map((recipe) => (
         <Link key={recipe.id} to={`/recipe/${recipe.id}?query=${query}&page=${currentPage}`} className="flex">
           <div className="w-full p-4 bg-white rounded-[20px] flex flex-col justify-between items-start group" style={{ boxShadow: "0px 6px 12px #00000019" }}>

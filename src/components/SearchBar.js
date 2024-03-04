@@ -20,8 +20,11 @@ const SearchBar = ({ value, setValue, setQuery, setCurrentPage }) => {
 
   return (
     <div className="w-full max-w-[400px] mx-auto mb-10 flex justify-center items-center relative">
-      <input type="text" value={value} className="outline-none w-full max-w-[400px] h-[50px] py-4 px-4 pr-[45px] rounded-l-[30px] border focus:border-2 border-green-500 bg-white text-base" placeholder='Search ingredients...'
-        onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()} />
+      <input
+        type="text" value={value} inputMode="search" placeholder="Search ingredients..."
+        className="outline-none w-full max-w-[400px] h-[50px] py-4 px-4 pr-[45px] rounded-l-[30px] border focus:border-2 border-green-500 bg-white text-base"
+        onChange={handleChange} onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+      />
       {value &&
         <IconX
           className="w-[20px] h-[20px] cursor-pointer absolute top-1/2 right-16 translate-y-[-50%] hover:text-green-500"
