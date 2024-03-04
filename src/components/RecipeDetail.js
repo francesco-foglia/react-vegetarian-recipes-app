@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRecipeDetailsSuccess } from '../store/actions';
 
 import ErrorMessage from './ErrorMessage';
 import Spinner from './Spinner';
@@ -14,11 +16,8 @@ const RecipeDetail = () => {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
 
-  const [recipeDetails, setRecipeDetails] = useState(null);
-  const [spinner, setSpinner] = useState(true);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [searchParams] = useSearchParams();
 
   const [query] = React.useState(
     searchParams.get("query") || ''
@@ -28,6 +27,12 @@ const RecipeDetail = () => {
     parseInt(searchParams.get("page")) || 1
   );
 
+  const dispatch = useDispatch();
+  const recipeDetails = useSelector(state => state.recipeDetails);
+
+  const [spinner, setSpinner] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       setSpinner(true);
@@ -35,7 +40,7 @@ const RecipeDetail = () => {
         const response = await axios.get(
           `https://api.spoonacular.com/recipes/${id}/information?apiKey=${process.env.REACT_APP_API_KEY}`
         );
-        setRecipeDetails(response?.data);
+        dispatch(fetchRecipeDetailsSuccess(response?.data));
         setSpinner(false);
       } catch (error) {
         setErrorMessage('An error occurred while fetching recipe details. Please try again later.');
@@ -44,7 +49,7 @@ const RecipeDetail = () => {
     };
 
     fetchRecipeDetails();
-  }, [id]);
+  }, [id, dispatch]);
 
   if (spinner) return <Spinner />;
 
