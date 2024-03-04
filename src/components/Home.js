@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipesSuccess } from '../store/actions';
 
@@ -56,37 +57,42 @@ const Home = () => {
   if (spinner) return <Spinner />;
 
   return (
-    <div className="w-full min-h-screen py-10 px-[5%] 2xl:container mx-auto">
-      <h1 className="text-3xl text-center mb-10">Vegetarian Recipes</h1>
-      {!errorMessage && (
-        <>
-          <SearchBar
-            fetchRecipes={fetchRecipes}
-            value={value}
-            setValue={setValue}
-            setQuery={setQuery}
-            setCurrentPage={setCurrentPage}
-          />
-          {recipes.length > 0 ? (
-            <>
-              <RecipeList recipes={recipes} query={query} currentPage={currentPage} />
-              {totalResults > itemsPerPage && (
-                <Pagination
-                  query={query}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  totalResults={totalResults}
-                  itemsPerPage={itemsPerPage}
-                />
-              )}
-            </>
-          ) : (
-            <p className="text-center my-5">No recipes found. Try another search.</p>
-          )}
-        </>
-      )}
-      {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
-    </div>
+    <>
+      <Helmet>
+        <title>Vegetarian Recipes</title>
+      </Helmet>
+      <div className="w-full min-h-screen py-10 px-[5%] 2xl:container mx-auto">
+        <h1 className="text-3xl text-center mb-10">Vegetarian Recipes</h1>
+        {!errorMessage && (
+          <>
+            <SearchBar
+              fetchRecipes={fetchRecipes}
+              value={value}
+              setValue={setValue}
+              setQuery={setQuery}
+              setCurrentPage={setCurrentPage}
+            />
+            {recipes.length > 0 ? (
+              <>
+                <RecipeList recipes={recipes} query={query} currentPage={currentPage} />
+                {totalResults > itemsPerPage && (
+                  <Pagination
+                    query={query}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalResults={totalResults}
+                    itemsPerPage={itemsPerPage}
+                  />
+                )}
+              </>
+            ) : (
+              <p className="text-center my-5">No recipes found. Try another search.</p>
+            )}
+          </>
+        )}
+        {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
+      </div>
+    </>
   );
 };
 

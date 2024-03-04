@@ -8,7 +8,7 @@ const Pagination = ({ query, currentPage, setCurrentPage, totalResults, itemsPer
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-center items-center mb-5">
+    <div className="flex justify-center items-center">
       <button onClick={() => {
         setCurrentPage(prevPage => prevPage - 1);
         if (query === "" && currentPage === 2) {
