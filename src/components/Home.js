@@ -67,14 +67,22 @@ const Home = () => {
             setQuery={setQuery}
             setCurrentPage={setCurrentPage}
           />
-          <RecipeList recipes={recipes} query={query} currentPage={currentPage} />
-          <Pagination
-            query={query}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalResults={totalResults}
-            itemsPerPage={itemsPerPage}
-          />
+          {recipes.length > 0 ? (
+            <>
+              <RecipeList recipes={recipes} query={query} currentPage={currentPage} />
+              {totalResults > itemsPerPage && (
+                <Pagination
+                  query={query}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  totalResults={totalResults}
+                  itemsPerPage={itemsPerPage}
+                />
+              )}
+            </>
+          ) : (
+            <p className="text-center my-5">No recipes found. Try another search.</p>
+          )}
         </>
       )}
       {errorMessage && <ErrorMessage errorMessage={errorMessage} />}
