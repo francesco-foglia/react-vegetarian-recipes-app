@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Placeholder from '../img/placeholder.jpg';
 
 const RecipeList = ({ recipes, query, currentPage }) => {
   return (
@@ -17,7 +18,7 @@ const RecipeList = ({ recipes, query, currentPage }) => {
               effect="blur"
               src={recipe.image}
               alt={recipe.title}
-              placeholderSrc="https://spoonacular.com/recipeImages/157993-556x370.jpg"
+              placeholderSrc={Placeholder}
               className="w-full h-auto object-cover object-center rounded-[16px] min-h-[250px] max-h-[250px]"
             />
 

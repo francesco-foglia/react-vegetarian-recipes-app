@@ -10,6 +10,7 @@ import Spinner from './Spinner';
 
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Placeholder from '../img/placeholder.jpg';
 
 import { IconArrowLeft } from '@tabler/icons-react';
 
@@ -70,7 +71,7 @@ const RecipeDetail = () => {
             effect="blur"
             src={recipeDetails?.image}
             alt={recipeDetails?.title}
-            placeholderSrc="https://spoonacular.com/recipeImages/157993-556x370.jpg"
+            placeholderSrc={Placeholder}
             className="w-full h-full mb-10 object-cover object-center rounded-[18px] border-4 border-white"
           />
 
@@ -94,7 +95,7 @@ const RecipeDetail = () => {
                 effect="blur"
                 src={`https://spoonacular.com/cdn/ingredients_100x100/${ingredient.image}`}
                 alt={ingredient.image}
-                placeholderSrc="https://spoonacular.com/recipeImages/157993-556x370.jpg"
+                placeholderSrc={Placeholder}
                 className="w-[50px] h-[50px] m-auto my-2"
               />
 
@@ -103,15 +104,19 @@ const RecipeDetail = () => {
           ))}
         </div>
 
-        <h3 className='text-2xl mb-5'>Instructions</h3>
-        <div className="mb-10">
-          {recipeDetails?.analyzedInstructions[0]?.steps.map((step, index) => (
-            <div key={index} className="flex justify-start items-start mb-2.5">
-              <small className="min-w-[24px] max-w-[24px] h-[24px] mr-3 p-1 rounded-full flex justify-center items-center bg-green-500 text-white font-semibold">{index + 1}</small>
-              <p dangerouslySetInnerHTML={{ __html: step.step }} className="font-normal text-justify"></p>
+        {recipeDetails?.analyzedInstructions[0] && (
+          <>
+            <h3 className='text-2xl mb-5'>Instructions</h3>
+            <div className="mb-10">
+              {recipeDetails?.analyzedInstructions[0]?.steps.map((step, index) => (
+                <div key={index} className="flex justify-start items-start mb-2.5">
+                  <small className="min-w-[24px] max-w-[24px] h-[24px] mr-3 p-1 rounded-full flex justify-center items-center bg-green-500 text-white font-semibold">{index + 1}</small>
+                  <p dangerouslySetInnerHTML={{ __html: step.step }} className="font-normal text-justify"></p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        )}
 
         <button onClick={() => {
           if (query === "" && currentPage === 1) {
