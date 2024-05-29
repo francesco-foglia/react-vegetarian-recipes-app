@@ -35,7 +35,7 @@ const RecipeList: React.FC<Props> = ({ recipes, query, currentPage }) => {
                 className="w-full h-auto object-cover object-center rounded-[16px] min-h-[250px] max-h-[250px]"
               />
             </div>
-            <h2 className="p-3 group-hover:text-green-500 transition-all duration-300 ease-in-out text-black text-left">
+            <h2 className="p-2 pt-[12px] group-hover:text-green-500 transition-all duration-300 ease-in-out text-black text-left">
               {recipe.title}
             </h2>
           </div>
