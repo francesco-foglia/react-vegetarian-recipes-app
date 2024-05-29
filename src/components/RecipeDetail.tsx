@@ -85,7 +85,7 @@ const RecipeDetail: React.FC<RecipeDetailProps> = () => {
                 src={recipeDetails?.image || Placeholder}
                 alt={recipeDetails?.title}
                 placeholderSrc={Placeholder}
-                className="w-full h-full mb-10 object-cover object-center rounded-[18px] border-4 border-white"
+                className="w-full h-full mb-10 object-cover object-center rounded-[20px] border-4 border-white"
               />
             </div>
 
